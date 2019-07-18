@@ -1,21 +1,21 @@
 {% if post.layout != post %}
   {% assign words = post.content | strip_html | number_of_words %}
   {% if words < 180 %}
-    less than 1 minute read
+    需要0.5分钟
   {% elsif words < 360 %}
-    1 minute read
+    需要1分钟
   {% else %}
-    {{ words | divided_by:180 }} minute read
+    需要{{ words | divided_by:180 }}分钟
   {% endif %}
 {% endif %}
 
 {% if post.layout == post %}
   {% assign words = content | number_of_words %}
   {% if words < 180 %}
-    less than 1 minute read
+    需要0.5分钟
   {% elsif words < 360 %}
-    1 minute read
+    需要1分钟
   {% else %}
-    {{ words | divided_by:180 }} minute read
+    需要{{ words | divided_by:180 }}分钟
   {% endif %}
 {% endif %}
