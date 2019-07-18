@@ -1,10 +1,17 @@
 ---
 layout: post
-title: "About the Author"
-author: "Paul Le"
+title: "收集散落的照片（二）"
 categories: journal
 tags: [documentation,sample]
 image: cutting.jpg
 ---
 
-Hi there! I'm Paul. I’m a physics major turned programmer. Ever since I first learned how to program while taking a scientific computing for physics course, I have pursued programming as a passion, and as a career. Check out [my personal website](https://www.lenpaul.com/) for more information on my other projects (including more Jekyll themes!), as well as some of my writing.
+先说个事儿，因为微信公众号官方调整了一些机制，导致我无法添加新的目录链接到已经发布的文章中（以往我更新目录中的某些内容后，你们点击获取的是最新的内容，但现在好像不行了），所以往后我在当期主打推送下方会附加一个目录索引的文章，以方便各位查看相关目录，皆以最新推送下的目录为准。
+
+这是关于blender自学的第五篇推送。
+
+这一期所要讲的仍然是物体的移动、旋转和缩放——但是是进阶版，所谓“进阶”的意思就是，你可以对物体做出更符合自己实际要求的操控。
+
+本章节的移动、旋转和缩放功能，涉及到游标、轴心点以及两个免费插件QBlocker和Pivot Pro的使用，仅仅学好这一节，你就可以建出大部分足以解决基本绘画透视辅助的3D模型了。
+
+注：每一期所涉及的百度盘上打包的资源或视频，都有可能因各种原因而链接失效，假如你在下载时发现链接不能用了，请在评论中提出，我会把链接更新在评论中的置顶帖。

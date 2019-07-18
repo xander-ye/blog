@@ -7,26 +7,26 @@ disqus:
 google-ID: 'UA-112060364-1'
 
 menu:
-- {name: 'About', path: 'menu', url: 'about.html'}
-- {name: 'Writing', path: 'menu', url: 'writing.html'}
-- {name: 'Contact', path: 'menu', url: 'contact.html'}
+- {name: '关于', path: 'menu', url: 'about.html'}
+- {name: '目录', path: 'menu', url: 'writing.html'}
+- {name: '联系', path: 'menu', url: 'contact.html'}
 
 # Available social icons are powered by Font Awesome, so you can use any icon that they offer
 social:
-- {icon: 'github', link: 'https://www.github.com/lenpaul'}
-- {icon: 'twitter', link: 'https://twitter.com/paululele'}
-- {icon: 'linkedin', link: 'http://www.linkedin.com/in/lenpaul/'}
+- {icon: 'github', link: 'https://github.com/xander-ye'}
+- {icon: 'book', link: 'https://www.jianshu.com/u/4ed3559f7e9d'}
+#- {icon: 'linkedin', link: 'http://www.linkedin.com/in/lenpaul/'}
 - {icon: 'envelope', link: 'mailto:l.nguyen.paul@gmail.com'}
 - {icon: 'rss-square', link: '/feed.xml'}
 # - {icon: 'rss-square', link: '/rss-feed.xml'}
 
 # Customize site text
 pagination:
-  next_page: 'Newer'
-  previous_page: 'Older'
+  next_page: '下一页'
+  previous_page: '上一页'
 
-sharing_button_prompt: 'Feel free to share!'
+sharing_button_prompt: '分享'
 
-related_posts: 'You may also enjoy:'
+related_posts: '推荐文章'
 
-post_date_prefix: 'Written on'
+post_date_prefix: ''
