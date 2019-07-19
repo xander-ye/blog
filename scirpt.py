@@ -8,42 +8,67 @@ import shutil
 import oss2
 import os
 import sys
+import time
 
 
-def download():
-    path = '/Users/yetongxue/python/myblog/_posts/2016-12-31-collect-pic.md'
-    with open(path, 'r') as f:
-        i = 0
-        for line in f.readlines():
-            if line.startswith('![](http://upload-images.jianshu.io/upload_images/'):
-                url = line[4: -2]
-                r = requests.get(url, stream=True)
-                if r.status_code == 200:
-                    save_path = '/Users/yetongxue/Downloads/collect/20190719-收集散落的照片-{}.jpg'.format(i)
-                    with open(save_path, 'wb') as f:
-                        r.raw.decode_content = True
-                        shutil.copyfileobj(r.raw, f)
-                        i += 1
+class Script(object):
+    def __init__(self):
+        self.basedir, self.filedir = self.init_dir()
 
+    def init_dir(self):
+        basedir = os.path.dirname(sys.argv[0])
+        tmpdir = os.path.join(basedir, 'tmp')
+        if not os.path.isdir(tmpdir):
+            os.makedirs(tmpdir)
+        filedir = os.path.join(tmpdir, 'filedir')
+        if not os.path.isdir(filedir):
+            os.makedirs(filedir)
+        return tmpdir, filedir
 
-def upload():
-    basedir = os.path.dirname(sys.argv[0])
-    tmp = os.path.join(basedir, 'tmp')
-    if not os.path.isdir(tmp):
-        os.makedirs(tmp)
+    def download(self):
+        path = '/Users/yetongxue/python/myblog/_posts/2016-12-31-collect-pic.md'
+        with open(path, 'r') as f:
+            i = 0
+            for line in f.readlines():
+                if line.startswith('![](http://upload-images.jianshu.io/upload_images/'):
+                    url = line[4: -2]
+                    r = requests.get(url, stream=True)
+                    if r.status_code == 200:
+                        filename = 'photo-collecting-{}.jpg'.format(i)
+                        save_path = os.path.join(self.filedir, filename)
+                        with open(save_path, 'wb') as f:
+                            r.raw.decode_content = True
+                            shutil.copyfileobj(r.raw, f)
+                            i += 1
 
-    # https://github.com/aliyun/aliyun-oss-python-sdk
-    endpoint = 'oss-cn-chengdu.aliyuncs.com'
-    auth = oss2.Auth(os.environ.get('ALIYUN_ACCESS_KEY_ID'), os.environ.get('ALIYUN_ACCESS_KEY_SECRET'))
-    bucket = oss2.Bucket(auth, endpoint, 'my-blog-media')
-    save_path = '/Users/yetongxue/Downloads/collect/20190719-收集散落的照片-{}.jpg'.format(2)
-    result = bucket.put_object_from_file('20190719-收集散落的照片-0.jpg', save_path)
-    if result.status == 200:
-        pass
+    def get_files(self):
+        files = [(x[0], x[2]) for x in os.walk(self.filedir)]
+        return files[0][1]
 
+    def upload(self):
+        endpoint = 'oss-cn-chengdu.aliyuncs.com'
+        bucket_name = 'my-blog-media'
+        auth = oss2.Auth(os.environ.get('ALIYUN_ACCESS_KEY_ID'), os.environ.get('ALIYUN_ACCESS_KEY_SECRET'))
+        bucket = oss2.Bucket(auth, endpoint, bucket_name)
+        uploads = []
+        for i in range(87):
+            filename = 'photo-collecting-{}.jpg'.format(i)
+            filepath = os.path.join(self.filedir, filename)
+            oss_filename = '{}-{}'.format(time.time(), filename)
+            result = bucket.put_object_from_file(oss_filename, filepath)
+            if result.status == 200:
+                url = 'https://{}.{}/{}'.format(bucket_name, endpoint, oss_filename)
+                markdown_url = '![]({})'.format(url)
+                uploads.append(markdown_url)
 
+        upload_file = os.path.join(self.basedir, 'filename.txt')
+        if not os.path.exists(upload_file):
+            os.system('touch {}'.format(upload_file))
+        with open(upload_file, 'w') as f:
+            f.write('\n'.join(uploads))
 
 
 if __name__ == '__main__':
-    # download()
-    upload()
+    script = Script()
+    # script.download()
+    script.upload()
